@@ -1,0 +1,10 @@
+[build]
+target = "x86_64-myos2026.json" # set default target build instead passing it as a parameter every build command
+
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner" # it will trigger flow: "cargo bootimage" and start qemu
+
+[unstable]
+json-target-spec = true # Enable custom json target from file in [build]
+build-std = ["core", "compiler_builtins"] # Custom targets don’t have prebuilt std/core, so we need to compile them.
+build-std-features = ["compiler-builtins-mem"] # Reuse functions here: https://github.com/rust-lang/compiler-builtins/blob/eff506cd49b637f1ab5931625a33cef7e91fbbf6/src/mem.rs#L12-L69. Ideally, baremetal device doesn't have any libc for mem. So use custom one
