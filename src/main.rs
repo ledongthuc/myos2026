@@ -8,13 +8,15 @@ use core::panic::PanicInfo;
 // Default _start() as entrypoint (use mostly) and no_mangle to avoid function name re-generation
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    vga_buffer::print_something();
+    println!("Hello world {} {}!", "MyOS", "2026");
+    println!("Welcome to my place");
 
     loop {}
 }
 
 // Define panic handler by our self because we on't have std lib to handle it
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
 }
